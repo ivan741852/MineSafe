@@ -27,7 +27,7 @@
     }
 
     .container {
-      max-width: 900px;
+      max-width: 1000px;
       margin: 0 auto;
     }
 
@@ -51,7 +51,6 @@
       color: #f2cc60;
     }
 
-    /* --- Search Bar Styling --- */
     .search-container {
       margin-bottom: 16px;
     }
@@ -72,7 +71,6 @@
     #searchInput:focus {
       border-color: var(--accent);
     }
-    /* -------------------------- */
 
     table {
       width: 100%;
@@ -87,6 +85,7 @@
       padding: 12px 16px;
       text-align: left;
       border-bottom: 1px solid var(--border);
+      font-size: 0.95rem;
     }
 
     th {
@@ -144,73 +143,62 @@
   <div class="container">
     <header>
       <h1>🛡️ Minecraft Community Safety Hub</h1>
-      <p>A community-maintained index for verifying official client sources and understanding security risks.</p>
+      <p>A community-maintained index verifying Minecraft clients, VirusTotal reports, and malware proofs.</p>
     </header>
 
     <div class="alert">
-      <strong>⚠️ Security Rule #1:</strong> Never download client <code>.jar</code> or <code>.zip</code> files from YouTube mediafire/mega links or unknown Discord attachments. Always use verified primary domains or official GitHub releases.
+      <strong>⚠️ Security Warning:</strong> Never download client <code>.jar</code> or <code>.zip</code> files from random Discord attachments or YouTube mediafire links. Always check VirusTotal scans and official open-source repositories.
     </div>
 
-    <h2>Verified Official Sources</h2>
+    <h2>Client Index & Scans</h2>
 
-    <!-- Search Bar Input -->
     <div class="search-container">
-      <input type="text" id="searchInput" placeholder="🔍 Search clients or domains (e.g. Meteor, LiquidBounce)...">
+      <input type="text" id="searchInput" placeholder="🔍 Search clients, status, or domains...">
     </div>
 
     <table id="clientTable">
       <thead>
         <tr>
-          <th>Client Name</th>
+          <th>Client / File Name</th>
           <th>Status</th>
           <th>Official Source</th>
-          <th>Open Source</th>
+          <th>VirusTotal Scan</th>
+          <th>Proof / Notes</th>
         </tr>
       </thead>
       <tbody>
+        <!-- EXAMPLE CLEAN CLIENT -->
         <tr>
           <td><strong>Meteor Client</strong></td>
-          <td><span class="badge badge-safe">Verified</span></td>
+          <td><span class="badge badge-safe">Clean / Safe</span></td>
           <td><a href="https://meteorclient.com" target="_blank" rel="noopener">meteorclient.com</a></td>
-          <td>Yes (GitHub)</td>
+          <td><a href="https://www.virustotal.com" target="_blank" rel="noopener">0/70 Clean Scan</a></td>
+          <td>Official open-source client on GitHub. No malicious webhooks or stealers.</td>
         </tr>
+
+        <!-- EXAMPLE MALWARE CLIENT -->
         <tr>
-          <td><strong>LiquidBounce</strong></td>
-          <td><span class="badge badge-safe">Verified</span></td>
-          <td><a href="https://liquidbounce.net" target="_blank" rel="noopener">liquidbounce.net</a></td>
-          <td>Yes (GitHub)</td>
-        </tr>
-        <tr>
-          <td><strong>Wurst Client</strong></td>
-          <td><span class="badge badge-safe">Verified</span></td>
-          <td><a href="https://wurstclient.net" target="_blank" rel="noopener">wurstclient.net</a></td>
-          <td>Yes (GitHub)</td>
+          <td><strong>FakePrivateClient.jar</strong> (Example)</td>
+          <td><span class="badge badge-unsafe">MALWARE</span></td>
+          <td><code>MediaFire Link (Do NOT download)</code></td>
+          <td><a href="https://www.virustotal.com" target="_blank" rel="noopener">45/70 Flagged</a></td>
+          <td>Contains Discord token stealer sending data to webhook. <a href="#" target="_blank">Screenshot Proof</a></td>
         </tr>
       </tbody>
     </table>
 
-    <div id="noResults" class="no-results">No matching clients found.</div>
+    <div id="noResults" class="no-results">No matching items found.</div>
 
     <div class="section">
-      <h2>🔍 How to Verify Any Client Before Running</h2>
+      <h2>🔍 How We Check Files</h2>
       <ol>
-        <li><strong>Scan with Static Analysis:</strong> Test unknown files using browser-based static inspection tools like <a href="https://jar.tools" target="_blank">jar.tools</a>.</li>
-        <li><strong>Check Multi-Engine Antivirus:</strong> Upload the <code>.jar</code> to <a href="https://www.virustotal.com" target="_blank">VirusTotal</a> to check for known signatures.</li>
-        <li><strong>Decompile & Inspect:</strong> Open the <code>.class</code> files in tools like Recaf or JD-GUI to check for embedded webhooks or suspicious shell execution (<code>Runtime.getRuntime().exec()</code>).</li>
+        <li><strong>Static Inspection:</strong> We decompile the <code>.jar</code> file using Recaf / JD-GUI to inspect source code.</li>
+        <li><strong>VirusTotal Analysis:</strong> Files are run through 70+ antivirus engines to check for known signatures (BlankGrabber, Wups, etc.).</li>
+        <li><strong>Webhook Tracking:</strong> We check for hardcoded <code>discord.com/api/webhooks</code> links or suspicious <code>Runtime.exec()</code> calls.</li>
       </ol>
-    </div>
-
-    <div class="section">
-      <h2>🚨 Common Scam Tactics</h2>
-      <ul>
-        <li><strong>Fake YouTube Videos:</strong> Showcasing "private bypasses" or "free premium configs" linking to password-protected zip files.</li>
-        <li><strong>Cloned Domains:</strong> Lookalike domain names copying popular client designs.</li>
-        <li><strong>Token Stealers:</strong> Malicious code targeting <code>launcher_accounts.json</code> or browser storage folders.</li>
-      </ul>
     </div>
   </div>
 
-  <!-- Filter JavaScript -->
   <script>
     const searchInput = document.getElementById('searchInput');
     const tableRows = document.querySelectorAll('#clientTable tbody tr');
@@ -221,9 +209,7 @@
       let visibleCount = 0;
 
       tableRows.forEach(row => {
-        // Read text content across all columns in the row
         const rowText = row.textContent.toLowerCase();
-
         if (rowText.includes(filter)) {
           row.style.display = '';
           visibleCount++;
@@ -232,7 +218,6 @@
         }
       });
 
-      // Show "No matching clients found" if all rows are hidden
       if (visibleCount === 0 && filter !== '') {
         noResults.style.display = 'block';
       } else {
