@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Minecraft Client Safety Directory</title>
+  <style>
+    :root {
+      --bg: #0d1117;
+      --card-bg: #161b22;
+      --border: #30363d;
+      --text: #c9d1d9;
+      --heading: #f0f6fc;
+      --safe: #238636;
+      --unsafe: #da3633;
+      --warning: #d29922;
+      --accent: #58a6ff;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    header {
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 20px;
+      margin-bottom: 30px;
+    }
+
+    h1 {
+      color: var(--heading);
+      margin-bottom: 8px;
+    }
+
+    .alert {
+      background-color: rgba(210, 153, 34, 0.15);
+      border: 1px solid var(--warning);
+      border-radius: 6px;
+      padding: 12px 16px;
+      margin-bottom: 24px;
+      color: #f2cc60;
+    }
+
+    /* --- Search Bar Styling --- */
+    .search-container {
+      margin-bottom: 16px;
+    }
+
+    #searchInput {
+      width: 100%;
+      padding: 12px 16px;
+      background-color: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--heading);
+      font-size: 1rem;
+      box-sizing: border-box;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    #searchInput:focus {
+      border-color: var(--accent);
+    }
+    /* -------------------------- */
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 30px;
+      background: var(--card-bg);
+      border-radius: 6px;
+      overflow: hidden;
+    }
+
+    th, td {
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+
+    th {
+      background-color: #21262d;
+      color: var(--heading);
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-size: 0.85rem;
+      font-weight: bold;
+      color: white;
+    }
+
+    .badge-safe { background-color: var(--safe); }
+    .badge-unsafe { background-color: var(--unsafe); }
+    .badge-caution { background-color: var(--warning); color: #000; }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .section {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 20px;
+      margin-bottom: 24px;
+    }
+
+    code {
+      background: #272c34;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.9em;
+    }
+
+    .no-results {
+      text-align: center;
+      color: #8b949e;
+      padding: 20px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <h1>🛡️ Minecraft Community Safety Hub</h1>
+      <p>A community-maintained index for verifying official client sources and understanding security risks.</p>
+    </header>
+
+    <div class="alert">
+      <strong>⚠️ Security Rule #1:</strong> Never download client <code>.jar</code> or <code>.zip</code> files from YouTube mediafire/mega links or unknown Discord attachments. Always use verified primary domains or official GitHub releases.
+    </div>
+
+    <h2>Verified Official Sources</h2>
+
+    <!-- Search Bar Input -->
+    <div class="search-container">
+      <input type="text" id="searchInput" placeholder="🔍 Search clients or domains (e.g. Meteor, LiquidBounce)...">
+    </div>
+
+    <table id="clientTable">
+      <thead>
+        <tr>
+          <th>Client Name</th>
+          <th>Status</th>
+          <th>Official Source</th>
+          <th>Open Source</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Meteor Client</strong></td>
+          <td><span class="badge badge-safe">Verified</span></td>
+          <td><a href="https://meteorclient.com" target="_blank" rel="noopener">meteorclient.com</a></td>
+          <td>Yes (GitHub)</td>
+        </tr>
+        <tr>
+          <td><strong>LiquidBounce</strong></td>
+          <td><span class="badge badge-safe">Verified</span></td>
+          <td><a href="https://liquidbounce.net" target="_blank" rel="noopener">liquidbounce.net</a></td>
+          <td>Yes (GitHub)</td>
+        </tr>
+        <tr>
+          <td><strong>Wurst Client</strong></td>
+          <td><span class="badge badge-safe">Verified</span></td>
+          <td><a href="https://wurstclient.net" target="_blank" rel="noopener">wurstclient.net</a></td>
+          <td>Yes (GitHub)</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div id="noResults" class="no-results">No matching clients found.</div>
+
+    <div class="section">
+      <h2>🔍 How to Verify Any Client Before Running</h2>
+      <ol>
+        <li><strong>Scan with Static Analysis:</strong> Test unknown files using browser-based static inspection tools like <a href="https://jar.tools" target="_blank">jar.tools</a>.</li>
+        <li><strong>Check Multi-Engine Antivirus:</strong> Upload the <code>.jar</code> to <a href="https://www.virustotal.com" target="_blank">VirusTotal</a> to check for known signatures.</li>
+        <li><strong>Decompile & Inspect:</strong> Open the <code>.class</code> files in tools like Recaf or JD-GUI to check for embedded webhooks or suspicious shell execution (<code>Runtime.getRuntime().exec()</code>).</li>
+      </ol>
+    </div>
+
+    <div class="section">
+      <h2>🚨 Common Scam Tactics</h2>
+      <ul>
+        <li><strong>Fake YouTube Videos:</strong> Showcasing "private bypasses" or "free premium configs" linking to password-protected zip files.</li>
+        <li><strong>Cloned Domains:</strong> Lookalike domain names copying popular client designs.</li>
+        <li><strong>Token Stealers:</strong> Malicious code targeting <code>launcher_accounts.json</code> or browser storage folders.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Filter JavaScript -->
+  <script>
+    const searchInput = document.getElementById('searchInput');
+    const tableRows = document.querySelectorAll('#clientTable tbody tr');
+    const noResults = document.getElementById('noResults');
+
+    searchInput.addEventListener('keyup', function() {
+      const filter = searchInput.value.toLowerCase().trim();
+      let visibleCount = 0;
+
+      tableRows.forEach(row => {
+        // Read text content across all columns in the row
+        const rowText = row.textContent.toLowerCase();
+
+        if (rowText.includes(filter)) {
+          row.style.display = '';
+          visibleCount++;
+        } else {
+          row.style.display = 'none';
+        }
+      });
+
+      // Show "No matching clients found" if all rows are hidden
+      if (visibleCount === 0 && filter !== '') {
+        noResults.style.display = 'block';
+      } else {
+        noResults.style.display = 'none';
+      }
+    });
+  </script>
+
+</body>
+</html>
